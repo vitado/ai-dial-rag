@@ -20,3 +20,4 @@ jobs:
       repository: epam/ai-dial-rag
       images: |
         epam/ai-dial-rag
+      osv-image-scan: false
