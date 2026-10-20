@@ -4,6 +4,18 @@ name: SCA Scan
 
 on:
   workflow_dispatch:
+    inputs:
+      scan-tag:
+        description: "Focus the run on this one git tag (its source and the tag in every image) instead of the release set; empty = the full set"
+        type: string
+        default: ""
+      force-image-scan:
+        description: "On this one run, run the direct OSV image scan also where it is off for this repository"
+        type: boolean
+        default: false
+
+run-name: >-
+  SCA - manual by ${{ github.triggering_actor }}${{ inputs.scan-tag && format(' - tag {0}', inputs.scan-tag) || '' }}
 
 concurrency:
   group: sca-scan
@@ -21,3 +33,5 @@ jobs:
       images: |
         epam/ai-dial-rag
       osv-image-scan: false
+      scan-tag: ${{ inputs.scan-tag }}
+      force-image-scan: ${{ inputs.force-image-scan || false }}
