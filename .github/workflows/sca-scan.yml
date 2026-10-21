@@ -27,7 +27,7 @@ permissions:
 
 jobs:
   sca:
-    uses: vitado/ai-dial-ci/.github/workflows/sca_scheduled.yml@pilot/sca-split
+    uses: vitado/ai-dial-ci/.github/workflows/sca_scheduled.yml@sca-scheduled
     with:
       repository: epam/ai-dial-rag
       images: |
