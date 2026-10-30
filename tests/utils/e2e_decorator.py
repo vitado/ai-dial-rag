@@ -34,7 +34,7 @@ async def start_server(
 ) -> Tuple[asyncio.Future, uvicorn.Server, CacheMiddlewareApp]:
     logger.info("Starting server...")
     config_data = {
-        "dial_core_host": os.getenv("DIAL_CORE_HOST", "localhost:8080"),
+        "dial_core_host": os.getenv("DIAL_CORE_HOST", "http://localhost:8080"),
         "dial_core_api_key": os.getenv("DIAL_CORE_API_KEY", "dial_api_key"),
         "base_path": os.getenv("BASE_PATH", "tests/"),
         "test_name": test_name,
@@ -120,8 +120,8 @@ def e2e_test(filenames=(), refresh=None):
         )
 
         async def wrapper(request, recwarn, caplog, *args, **kwargs):
-            if request is not None:
-                os.environ["TEST_NAME"] = request.node.name
+            assert request is not None
+            os.environ["TEST_NAME"] = request.node.name
             attachments = [
                 {
                     "type": mimetypes.guess_type(filename)[0],
