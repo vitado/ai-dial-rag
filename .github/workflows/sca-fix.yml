@@ -28,7 +28,8 @@ jobs:
       report-run-ids: ${{ inputs.report-run-ids }}
       config: ${{ inputs.config }}
       dry-run: ${{ inputs.dry-run }}
-      app-id: ${{ vars.SCA_FIX_APP_ID }}
+      app-client-id: ${{ vars.SCA_FIX_APP_CLIENT_ID }}
     secrets:
       app-private-key: ${{ secrets.SCA_FIX_APP_PRIVATE_KEY }}
+
 
