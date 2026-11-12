@@ -18,7 +18,7 @@ run-name: >-
   SCA - manual by ${{ github.triggering_actor }}${{ inputs.scan-tag && format(' - tag {0}', inputs.scan-tag) || '' }}
 
 concurrency:
-  group: sca-scan-sca-smoke-k1
+  group: sca-scan-sca-smoke-s3b
   cancel-in-progress: false
 
 permissions:
@@ -27,7 +27,7 @@ permissions:
 
 jobs:
   sca:
-    uses: vitado/ai-dial-ci/.github/workflows/sca_scheduled.yml@sca-smoke-k1
+    uses: vitado/ai-dial-ci/.github/workflows/sca_scheduled.yml@sca-smoke-s3b
     with:
       repository: epam/ai-dial-rag
       images: |
