@@ -1,8 +1,10 @@
 name: SCA Scan
 
-# Pilot caller on the fork: manual runs only, the schedule is added when rolled out upstream.
+# Soak: daily scheduled scan on the engine rc (sca-canary) plus manual runs; the fixer is chained after the scheduled run.
 
 on:
+  schedule:
+    - cron: "3 5 * * *"
   workflow_dispatch:
     inputs:
       scan-tag:
@@ -15,7 +17,7 @@ on:
         default: false
 
 run-name: >-
-  SCA - manual by ${{ github.triggering_actor }}${{ inputs.scan-tag && format(' - tag {0}', inputs.scan-tag) || '' }}
+  SCA - ${{ github.event_name == 'schedule' && 'scheduled' || format('manual by {0}', github.triggering_actor) }}${{ inputs.scan-tag && format(' - tag {0}', inputs.scan-tag) || '' }}
 
 concurrency:
   group: sca-scan
@@ -27,7 +29,7 @@ permissions:
 
 jobs:
   sca:
-    uses: epam/ai-dial-ci/.github/workflows/sca_scheduled.yml@4.13.2
+    uses: vitado/ai-dial-ci/.github/workflows/sca_scheduled.yml@sca-canary
     with:
       repository: epam/ai-dial-rag
       images: |
